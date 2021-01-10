@@ -73,7 +73,6 @@ function UploadOrder(props) {
   //210107
 
   useEffect(() => {
-    console.log("결과1", startfiltering);
     if (startfiltering !== [] && startfiltering.length !== undefined) {
       var jarrayfINAL = [];
 
@@ -100,13 +99,9 @@ function UploadOrder(props) {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("wholetotal", wholetotal);
-  }, [, wholetotal]);
+  useEffect(() => {}, [, wholetotal]);
 
-  useEffect(() => {
-    console.log("wholetotalProducts", wholetotalProducts);
-  }, [wholetotalProducts]);
+  useEffect(() => {}, [wholetotalProducts]);
 
   useEffect(() => {
     html2canvas(captureRef.current).then((canvas) => {
@@ -119,8 +114,6 @@ function UploadOrder(props) {
 
         ReactS3Client.uploadFile(fd)
           .then((data) => {
-            console.log("전체합계", wholetotal);
-
             if (excelDataRaw2[0].samename !== undefined) {
               var aJsonArrayNew = new Array();
               var totalValue = 0;
@@ -191,6 +184,7 @@ function UploadOrder(props) {
                   aJson.sameArray2 = aJsonArrayNew;
                   aJsonArray = aJson;
                   setresultData2(resultData2.concat(aJsonArray));
+                  console.log("resultData2", resultData2);
                 }
               }
             } else {
@@ -230,6 +224,7 @@ function UploadOrder(props) {
 
               aJsonArray = aJson;
               setresultData2(resultData2.concat(aJsonArray));
+              console.log("resultData2", resultData2);
             }
           })
           .catch((err) => console.error("error", err));
@@ -246,7 +241,6 @@ function UploadOrder(props) {
   useEffect(() => {
     if (excelDataRaw2[0] !== undefined) {
       if (excelDataRaw2[0].samename !== undefined) {
-        console.log("시작쓰");
         var aJsonArrayNew = new Array();
         var totalValue = 0;
         for (
@@ -303,7 +297,7 @@ function UploadOrder(props) {
             aJson.sameArray = aJsonArrayNew;
             aJson.sameArray2 = aJsonArrayNew;
             aJsonArray = aJson;
-            console.log("마지막데이터", aJsonArray);
+
             setresultData(resultData.concat(aJsonArray));
           }
         }
@@ -349,7 +343,6 @@ function UploadOrder(props) {
         setButtonView(true);
         setButtonView1(true);
         setButtonView2(true);
-        console.log("끝");
       }
       setdisplayStatus(true);
     }
@@ -383,11 +376,12 @@ function UploadOrder(props) {
   };
 
   const finalOrder = async () => {
-    console.log("현재값", wholetotal);
-
-    console.log("현재값", wholetotalProducts);
     setdefaultModalShow(true);
 
+    var now = Date.now();
+    let date = new Date(now);
+
+    let date1 = moment(date).format("YY년MM월DD일 HH:mm");
     try {
       var aJsonArray = new Array();
 
@@ -400,7 +394,9 @@ function UploadOrder(props) {
         aJson.msg =
           "발주자명 : " +
           `${resultData2[i].발주자명}` +
-          "\n발주날짜 : #{b}\n\n" +
+          "\n발주날짜 : " +
+          `${date1}` +
+          "\n\n" +
           `${resultData2[i].비고1}` +
           "\n\n발주서보기 > " +
           `${resultData2[i].a}`;
@@ -463,7 +459,6 @@ function UploadOrder(props) {
   };
 
   const testdd = () => {
-    console.log("시작합니다");
     if (displayStatus == true && excelDataRaw[0] !== undefined) {
       setdisplayStatus(false);
     } else {
@@ -472,9 +467,10 @@ function UploadOrder(props) {
 
   const [uploadData, setuploadData] = useState([]);
   const menual =
-    "1.하단의 '파일 선택'버튼을 클릭 후 엑셀을 업로드 해 주세요(.xlsx형식으로 변환 후 업로드)\n\n" +
-    "2. 입력한 양식과 자동 생성된 발주서양식이 맞는지 확인해주세요(엑셀을 업로드 하신 후, 하단의 '발주서 링크' 테이블 밑으로 생성된 발주서의 링크를 클릭하여 확인하실 수 있습니다)\n\n" +
-    "3. 주문한 내역을 '발주내역 보기' 페이지에서 확인해 주세요";
+    "1. (필수) 사용하시기 전 '이용자 메뉴얼'에 나와있는 대로 사용해주세요.\n\n" +
+    "2.하단의 '파일 선택'버튼을 클릭 후 엑셀을 업로드 해 주세요(.xlsx형식으로 변환 후 업로드)\n\n" +
+    "3. 입력한 양식과 자동 생성된 발주서양식이 맞는지 확인해주세요(엑셀을 업로드 하신 후, 하단의 '발주서 링크' 테이블 밑으로 생성된 발주서의 링크를 클릭하여 확인하실 수 있습니다)\n\n" +
+    "4. 주문한 내역을 '발주내역 보기' 페이지에서 확인해 주세요";
 
   var count = "";
 
@@ -484,7 +480,6 @@ function UploadOrder(props) {
 
       let last_dot = file.name.lastIndexOf(".");
       let ext = file.name.slice(last_dot + 1);
-      console.log("파일정보", ext);
 
       if (ext !== "xlsx") {
         window.alert(
@@ -515,10 +510,9 @@ function UploadOrder(props) {
         );
         window.location.reload();
       } else {
-        console.log("ㅇㅁㅅㅁ", d);
         for (var i = 0; i < d.length - 1; i++) {
           var arrayTest = d[i].업체상호;
-          console.log("순서체크2", d);
+
           for (var j = i + 1; j < d.length; j++) {
             if (arrayTest == d[j].업체상호) {
               d[i].samename = arrayTest;
@@ -545,14 +539,12 @@ function UploadOrder(props) {
               }
 
               sameNumberCheck = sameNumberCheck + 1;
-              console.log("sameNumberCheck", sameNumberCheck);
 
               finalData.push(arrayTest);
-              console.log("finalData", finalData);
+
               if (d.length - 2 == i && d.length - 1 == j) {
                 setstartfiltering(d);
                 if (d.length - 2 == i && d.length - 1 == j) {
-                  console.log("순서체크1", d);
                   setstartfiltering(d);
                 }
               }
@@ -560,7 +552,6 @@ function UploadOrder(props) {
               if (d.length - 2 == i && d.length - 1 == j) {
                 setstartfiltering(d);
                 if (d.length - 2 == i && d.length - 1 == j) {
-                  console.log("순서체크2", d);
                   setstartfiltering(d);
                 }
               }

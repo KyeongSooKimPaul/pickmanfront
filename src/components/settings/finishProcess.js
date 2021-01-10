@@ -28,12 +28,14 @@ const { ExportCSVButton } = CSVExport;
 
 var nums = 0;
 var nums1 = 0;
+var sameNumberCheck = 0;
+
 function FinishProcess(props) {
   const [uploadData, setuploadData] = useState([]);
   const menual =
-    "1.하단의 '파일 선택'버튼을 클릭 후 엑셀을 업로드 해 주세요(.xlsx형식으로 변환 후 업로드)\n\n" +
-    "2. 입력한 양식과 하단의 내용이 맞나 확인 후 아래의 '주문하기'버튼을 클릭 해 주세요\n\n" +
-    "3. 주문한 내역을 '발주내역 보기' 페이지에서 확인해 주세요";
+    "1.하단의 '파일 선택'버튼을 클릭 후 백데이터 엑셀을 업로드 해 주세요(.xlsx형식으로 변환 후 업로드)\n\n" +
+    "2. 주문내역을 업로드 해 주세요.\n\n" +
+    "3. 업로드 후 대량이체파일 생성결과 탭 밑의 정보를 확인해주세요.";
   const [items, setItems] = useState([
     {
       합계: "",
@@ -50,20 +52,21 @@ function FinishProcess(props) {
   const [forStateCount3, setforStateCount3] = useState(-1);
   const [defaultModalShow, setdefaultModalShow] = useState(false);
   const [modalButtonShow, setmodalButtonShow] = useState(true);
+  const [startfiltering, setstartfiltering] = useState([]);
+  const [excelDataRaw, setexcelDataRaw] = useState([]);
+  const [backdatanumber, setbackdatanumber] = useState([]);
 
   var aJsonArray = [];
   var aJson = new Object();
   var seller = "";
   var wholesaler = "";
+  var counting = 0;
 
   const [changeusers] = useMutation(CHANGE_USER_BACKDATA, {
     onError: (error) => {
-      console.log("error", error);
       if (error.message == "Error!") {
-        console.log("error2", error.message);
         window.location.reload();
       } else {
-        console.log("변경 완료");
         setmodalButtonShow(false);
       }
     },
@@ -84,13 +87,29 @@ function FinishProcess(props) {
   }, []);
 
   useEffect(() => {
-    console.log("forStateCount", forStateCount);
+    if (startfiltering !== [] && startfiltering.length !== undefined) {
+      var jarrayfINAL = [];
+
+      for (var i = 0; i < startfiltering.length; i++) {
+        if (
+          startfiltering[i].합계.toString().length > 0 &&
+          Number(startfiltering[i].수량) > 0 &&
+          Number(startfiltering[i].합계) > 0
+        ) {
+          jarrayfINAL = jarrayfINAL.concat(startfiltering[i]);
+        }
+        if (startfiltering.length - 1 == i) {
+          setItems(jarrayfINAL);
+        }
+      }
+    }
+  }, [startfiltering]);
+
+  useEffect(() => {
     if (nums > 0 || nums1 > 0) {
-      console.log("최종", nums1);
-      console.log("최종", forStateCount);
       if (nums - 1 === forStateCount) {
         //window.alert("백데이터 업로드가 완료되었습니다.");
-        console.log("여기1");
+
         window.localStorage.setItem("user_backdata", "2");
         var backdata;
         var id = window.localStorage.getItem("user_id");
@@ -102,20 +121,15 @@ function FinishProcess(props) {
         });
       } else if (nums1 - 1 === forStateCount) {
         //window.alert("백데이터 업로드가 완료되었습니다.");
-        console.log("여기2ㄴ");
+
         setmodalButtonShow(false);
       }
     }
   }, [forStateCount]);
 
-  useEffect(() => {
-    console.log("forStateCount2", forStateCount2);
-  }, [forStateCount2]);
+  useEffect(() => {}, [forStateCount2]);
 
   useEffect(() => {
-    console.log("exel완료");
-    console.log("아이템길이", items.length);
-    console.log("user_backdata", window.localStorage.getItem("user_backdata"));
     if (window.localStorage.getItem("user_backdata") == "1") {
       setdisplayStatus(true);
       setdisplayStatus1(false);
@@ -125,32 +139,24 @@ function FinishProcess(props) {
       setdisplayStatus1(true);
     }
     if (items.length > 1) {
-      console.log("시작합니다");
       setfiltercount(filtercount + 1);
     }
   }, [items]);
 
   useEffect(() => {
-    console.log("filtercount완료", filtercount);
-
-    console.log("filtered", filtered);
-
     if (filtercount > -1 && items.length > filtercount) {
       startMutation();
-      console.log("startMutation");
     }
   }, [filtercount]);
 
   useEffect(() => {
     if (filtered.length !== 0) {
       setfiltered2(filtered2.concat(filtered));
-      console.log("체크11", items[filtercount]);
     }
   }, [filtered]);
 
   useEffect(() => {
     if (filtered.length !== 0) {
-      console.log("체크2", filtered2[filtercount]);
       aJson.a = items[filtercount];
       aJson.b = filtered2[filtercount];
       aJsonArray = aJson;
@@ -160,7 +166,6 @@ function FinishProcess(props) {
 
   useEffect(() => {
     if (filtered.length !== 0) {
-      console.log("체크33", filtered3);
       setfiltercount(filtercount + 1);
     }
   }, [filtered3]);
@@ -209,46 +214,52 @@ function FinishProcess(props) {
         resolve(data);
       };
 
-      fileReader.onerror = (error) => {
-        console.log("error", error);
-        // reject(error);
-      };
+      fileReader.onerror = (error) => {};
     });
 
     promise.then((d) => {
-      // if (!null) {
-      //   var userid = window.localStorage.getItem("user_id");
-
-      //   for (var j = 0; j < d.length; j++) {
-      //     console.log(j + "번째 실행중");
-      //     if (d[j].발주자명 == undefined || d[j].업체상호 == undefined) {
-      //       console.log(j + "번째 비어있음");
-      //     } else {
-      //       console.log(j + "번째 안비어있음");
-      //       seller = d[j].발주자명.toString();
-      //       setcheckck(d[j].발주자명.toString());
-
-      //       filterdBankData({
-      //         variables: {
-      //           userid,
-      //           seller: d[j].발주자명.toString(),
-      //           wholesaler: d[j].업체상호.toString(),
-      //         },
-      //       });
-      //     }
-      //   }
-      // } else {
-      //   window.alert("엑셀 데이터를 다시 확인해 주세요");
-      // }
-
       if (d.length == 0) {
         window.alert(
           "파일 확장자를 .xlsx형식으로 변환 후 다시 업로드 해 주세요"
         );
         window.location.reload();
       } else {
-        console.log("excel", d.length);
-        setItems(d);
+        for (var i = 0; i < d.length - 1; i++) {
+          var arrayTest = d[i].업체상호;
+          var arrayTest1 = d[i].발주자명;
+
+          for (var j = i + 1; j < d.length; j++) {
+            if (
+              arrayTest == d[j].업체상호 &&
+              arrayTest1 == d[j].발주자명 &&
+              d[j].수량 !== 0 &&
+              d[j].합계 !== 0
+            ) {
+              d[i].arrayTest = arrayTest;
+              d[i].arrayTest1 = arrayTest1;
+
+              if (d[i].수량 !== "") {
+                d[i].수량 = Number(d[i].수량) + Number(d[j].수량);
+                d[j].수량 = "";
+
+                d[i].합계 = Number(d[i].합계) + Number(d[j].합계);
+                d[j].합계 = "";
+              }
+
+              sameNumberCheck = sameNumberCheck + 1;
+
+              if (d.length - 2 == i && d.length - 1 == j) {
+                setstartfiltering(d);
+              }
+            } else {
+              if (d.length - 2 == i && d.length - 1 == j) {
+                setstartfiltering(d);
+              }
+            }
+          }
+        }
+
+        //setItems(d);
       }
     });
   };
@@ -263,7 +274,6 @@ function FinishProcess(props) {
       },
       csvType: Text,
       csvFormatter: (cell, row, rowIndex) => {
-        console.log("bankdata", row.b.bankcode);
         if (row.b.bankcode == undefined) {
           return console.log("undefined", row.b.bankcode);
         } else {
@@ -286,19 +296,6 @@ function FinishProcess(props) {
           }
         }
       },
-      // formatter: (rowContent, row) => {
-      //   console.log("bankdata", row.b.bankcode);
-      //   if (row.b.bankcode == undefined) {
-      //     return console.log("undefined", row.b.bankcode);
-      //   } else {
-      //     if (row.b.bankcode.length == 2) {
-      //       {
-      //         return (row.b.bankcode = "0" + row.b.bankcode.toString());
-      //       }
-      //     }
-      //   }
-
-      // },
     },
     {
       text: "계좌번호",
@@ -326,7 +323,23 @@ function FinishProcess(props) {
     },
     {
       text: "비고",
-      dataField: "a.비고",
+      dataField: "a.비고1",
+      sort: true,
+      headerStyle: {
+        backgroundColor: "#f6f6ee",
+      },
+    },
+    {
+      text: "발주자명",
+      dataField: "a.발주자명",
+      sort: true,
+      headerStyle: {
+        backgroundColor: "#f6f6ee",
+      },
+    },
+    {
+      text: "업체상호 ",
+      dataField: "a.업체상호",
       sort: true,
       headerStyle: {
         backgroundColor: "#f6f6ee",
@@ -342,7 +355,7 @@ function FinishProcess(props) {
         userId: userId,
       },
     }).then(console.log("끝"));
-    console.log("삭제 실행");
+
     const promise = new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsArrayBuffer(file);
@@ -360,7 +373,6 @@ function FinishProcess(props) {
           var bankowner = "";
 
           for (var i = 0; i < wb.SheetNames.length; i++) {
-            console.log(i + "numbers");
             const wsname = wb.SheetNames[i];
             const ws = wb.Sheets[wsname];
             const data = XLSX.utils.sheet_to_json(ws);
@@ -378,8 +390,6 @@ function FinishProcess(props) {
                 bankaccount = "undefined";
                 bankowner = "undefined";
               } else {
-                // console.log(i + "i번째 안비어있음");
-                // console.log(j + "j번째 안비어있음");
                 nums1 = nums1 + 1;
                 createBankdata({
                   variables: {
@@ -399,22 +409,18 @@ function FinishProcess(props) {
         }
       };
 
-      fileReader.onerror = (error) => {
-        console.log("error", error);
-      };
+      fileReader.onerror = (error) => {};
     });
 
     promise.then((d) => {
       setItems(d);
 
-      console.log("excel1", d);
       if (d.length == 0) {
         window.alert(
           "파일 확장자를 .xlsx형식으로 변환 후 다시 업로드 해 주세요"
         );
         window.location.reload();
       } else {
-        console.log("excel", d.length);
       }
     });
   };
@@ -437,18 +443,13 @@ function FinishProcess(props) {
           var bankaccount = "";
           var bankowner = "";
 
-          console.log(i + "여기실행");
-
           for (var i = 0; i < wb.SheetNames.length; i++) {
-            console.log(i + "numbers");
-
             const wsname = wb.SheetNames[i];
             const ws = wb.Sheets[wsname];
             const data = XLSX.utils.sheet_to_json(ws);
-            console.log(i + "i 번째 실행중");
+
             // resolve(data);
             for (var j = 0; j < data.length; j++) {
-              console.log(j + "j 번째 실행중");
               if (
                 data[j].거래처 == undefined ||
                 data[j].업체상호 == undefined ||
@@ -456,29 +457,16 @@ function FinishProcess(props) {
                 data[j].계좌번호 == undefined ||
                 data[j].예금주 == undefined
               ) {
-                // console.log(j + "번째 비어있음");
-
                 seller = "undefined";
                 wholesaler = "undefined";
                 bankcode = "undefined";
                 bankaccount = "undefined";
                 bankowner = "undefined";
-                console.log("첫번째 과정 끝1");
-
-                console.log(data.length + "data.length1");
-                console.log(wb.SheetNames.length + "SheetNames.length1");
               } else {
                 nums = nums + 1;
-                console.log("첫번째 과정 끝2");
-
+                console.log("nums", nums);
+                backdatanumber(nums);
                 setforStateCount2(forStateCount2 + 1);
-
-                console.log(j + "numbers2");
-                console.log(i + "numbers2");
-                //  nums = nums + 1;
-                //  console.log("nums", nums);
-                console.log(data.length + "data.length2");
-                console.log(wb.SheetNames.length + "SheetNames.length2");
                 createBankdata({
                   variables: {
                     userId: userId,
@@ -497,36 +485,18 @@ function FinishProcess(props) {
         }
       };
 
-      fileReader.onerror = (error) => {
-        console.log("error", error);
-      };
+      fileReader.onerror = (error) => {};
     });
 
     promise.then((d) => {
       setItems(d);
 
-      console.log("excel1", d);
       if (d.length == 0) {
         window.alert(
           "파일 확장자를 .xlsx형식으로 변환 후 다시 업로드 해 주세요"
         );
         window.location.reload();
       } else {
-        //  nums = nums + 1;
-        //  console.log("nums", nums);
-
-        //  createBankdata({
-        //    variables: {
-        //      userId: userId,
-        //      seller: data[j].거래처.toString(),
-        //      wholesaler: data[j].업체상호.toString(),
-        //      bankcode: data[j].은행코드.toString(),
-        //      bankaccount: data[j].계좌번호.toString(),
-        //      bankowner: data[j].예금주.toString(),
-        //    },
-        //  });
-
-        console.log("excel", d.length);
       }
     });
   };
@@ -646,18 +616,13 @@ function FinishProcess(props) {
     onError: (error) => console.log(error.message),
     onCompleted: (data) => {
       setforStateCount(forStateCount + 1);
-      console.log("nums", nums);
-      console.log("nums", nums1);
+      console.log("완료");
     },
   });
 
   const [deleteBackdata] = useMutation(DELETE_BANKDATA, {
-    onError: (error) => {
-      console.log("bankdata삭제 에러", error.message);
-    },
-    onCompleted: (data) => {
-      console.log("bankdata삭제 완료", data);
-    },
+    onError: (error) => {},
+    onCompleted: (data) => {},
   });
 
   const [filterdBankData] = useMutation(FILTERED_BANKDATA, {
@@ -667,8 +632,6 @@ function FinishProcess(props) {
     },
     onCompleted: (data) => {
       setfiltered(data.filteredBank);
-      // setfiltercount(filtercount + 1);
-      console.log("filtered", data.filteredBank);
     },
   });
 
@@ -878,7 +841,7 @@ function FinishProcess(props) {
               <thead>
                 <tr>
                   <th scope="col">발주자명</th>
-                  <th scope="col">업체상호</th>
+                  <th scope="col">업체상호 </th>
                   <th scope="col">가게주소</th>
                   <th scope="col">전화번호</th>
                   <th scope="col">상품코드</th>

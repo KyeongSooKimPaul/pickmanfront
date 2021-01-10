@@ -30,7 +30,7 @@ const Download = (props) => {
   const [contents, setcontents] = useState();
   const menual =
     "1.하단의 '예시폼 양식'을 확인 후 '예시폼 다운로드'버튼을 클릭하여 다운로드 해 주세요 \n\n" +
-    "2. 발주자명, 사입팀명, 업체상호,상품코드,컬러, 사이즈, 단가, 수량, 합계, 가게주소, 전화번호 등의 내용을 입력해주세요. \n\n" +
+    "2. 발주자명, 사입팀명, 업체상호 ,상품코드,컬러, 사이즈, 단가, 수량, 합계, 가게주소, 전화번호 등의 내용을 입력해주세요. \n\n" +
     "3. 입력된 폼을 ‘메뉴’의 '업로드 및 발주'페이지를 통하여 업로드 해 주세요.";
 
   useEffect(() => {
@@ -46,9 +46,7 @@ const Download = (props) => {
     setcontents("1");
   }, []);
 
-  useEffect(() => {
-    console.log("contents실행", contents);
-  }, [contents]);
+  useEffect(() => {}, [contents]);
 
   const readExcel = (file) => {
     const promise = new Promise((resolve, reject) => {
@@ -76,13 +74,12 @@ const Download = (props) => {
 
     promise.then((d) => {
       setItems(d);
-      console.log("excel1", d.length);
+
       if (d.length == 0) {
         window.alert(
           "파일 확장자를 .xlsx형식으로 변환 후 다시 업로드 해 주세요"
         );
       } else {
-        console.log("excel", d.length);
       }
     });
   };
@@ -103,7 +100,7 @@ const Download = (props) => {
       },
     },
     {
-      text: "업체상호",
+      text: "업체상호 ",
       dataField: "__EMPTY",
       headerStyle: {
         backgroundColor: "#f6f6ee",
@@ -190,7 +187,7 @@ const Download = (props) => {
     },
 
     {
-      text: "출고예상날짜",
+      text: "출고날짜",
       dataField: "__EMPTY_10",
       headerStyle: {
         backgroundColor: "#f6f6ee",
@@ -222,7 +219,7 @@ const Download = (props) => {
 
   return (
     <Fragment>
-      <Breadcrumb title="예시폼 다운로드" parent="픽맨" />
+      <Breadcrumb title="픽맨 예시폼" parent="픽맨" />
       <div className="align-self-center text-center">
         <div className="row">
           <div className="col-xl-12 col-sm-12">

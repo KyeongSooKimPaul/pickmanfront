@@ -31,7 +31,7 @@ export const MENUITEMS = [
     : {},
   {
     path: "/assets/download",
-    title: "예시폼 다운로드",
+    title: "픽맨 예시폼",
     icon: Archive,
     type: "link",
     badgeType: "primary",

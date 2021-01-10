@@ -32,8 +32,6 @@ const ViewOrders = (props) => {
   var roll = "";
 
   useEffect(() => {
-    console.log("dd없데이트");
-
     newData({
       variables: {
         userId: window.localStorage.getItem("user_id"),
@@ -43,18 +41,6 @@ const ViewOrders = (props) => {
     });
   }, []);
 
-  // const { loading } = useQuery(VIEW_ORDER, {
-  //   variables: { id: window.localStorage.getItem("user_id"),
-
-  // },
-  //   onCompleted: (data) => {
-  //     setuploadData(data.usersbyId[0].rawexcels);
-  //     console.log("data", data.usersbyId[0].rawexcels);
-  //   },
-  //   onError: (error) => console.log(error.message),
-  //   key: "graphql12",
-  // });
-
   const [newData] = useMutation(VIEW_ORDER, {
     onCompleted: (data) => {
       var jArray = [];
@@ -63,7 +49,6 @@ const ViewOrders = (props) => {
         jArray = jArray.concat(data.usersbyId[i]);
 
         if (data.usersbyId.length - 1 == i) {
-          console.log("data1finish", jArray);
           return setuploadData(jArray);
         }
       }
@@ -108,13 +93,12 @@ const ViewOrders = (props) => {
       },
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
-          console.log("e값", row);
           window.open(row.url, "_blank");
         },
       },
     },
     {
-      text: "업체상호",
+      text: "업체상호 ",
       dataField: "name",
       sort: true,
       headerStyle: {
@@ -191,18 +175,6 @@ const ViewOrders = (props) => {
     },
   ];
 
-  // const { loading } = useQuery(VIEW_ORDER, {
-  //   variables: { id: window.localStorage.getItem("user_id"),
-
-  // },
-  //   onCompleted: (data) => {
-  //     setuploadData(data.usersbyId[0].rawexcels);
-  //     console.log("data", data.usersbyId[0].rawexcels);
-  //   },
-  //   onError: (error) => console.log(error.message),
-  //   key: "graphql12",
-  // });
-
   return (
     <Fragment>
       {/* <Loader visible={loading} /> */}
@@ -230,7 +202,6 @@ const ViewOrders = (props) => {
                         sizePerPage: 10,
                         hideSizePerPage: true,
                         onPageChange: (page, sizePerPage) => {
-                          console.log("Newest page:" + page);
                           if (page > 5) {
                             newData({
                               variables: {

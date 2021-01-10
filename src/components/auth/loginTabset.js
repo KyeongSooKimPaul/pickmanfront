@@ -117,15 +117,13 @@ function LoginTabset(props) {
     event.target.classList.add("show");
   };
 
-  const onClickimg = () => {
-    console.log("사업자등록증 업로드 완료!");
-  };
+  const onClickimg = () => {};
 
   const [loginCompleted] = useMutation(SIGNIN, {
     onError: (error) => alert("입력정보를 다시 확인해주세요"),
     onCompleted: (response) => {
       alert("로그인이 완료되었습니다.");
-      console.log("data", response);
+
       window.localStorage.setItem("logedin", "logedin");
       window.localStorage.setItem("user_id", response.loginUser.id);
       window.localStorage.setItem("user_email", response.loginUser.email);
@@ -138,7 +136,6 @@ function LoginTabset(props) {
       var userRoll = response.loginUser.roll;
       var userActive = response.loginUser.active;
       window.localStorage.setItem("user_roll", response.loginUser.roll);
-      console.log("user_email", window.localStorage.getItem("user_email"));
 
       if (userRoll == 3) {
         window.location = "/dashboard";
@@ -163,9 +160,6 @@ function LoginTabset(props) {
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
-    console.log("roll", roll);
-    console.log("email", email);
-    console.log("password", password);
 
     if (password !== passwordConfirm) {
       return window.alert("비밀번호 확인을 다시 해 주세요");

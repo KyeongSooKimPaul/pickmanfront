@@ -44,9 +44,7 @@ const Dashboard = (props) => {
 
   const [changeusers] = useMutation(CHANGE_USER_ACTIVE, {
     onError: (error) => console.log(error.message),
-    onCompleted: (data) => {
-      console.log("Successfully dtat", data);
-    },
+    onCompleted: (data) => {},
   });
 
   const onDefaultModalClose = () => {
@@ -61,8 +59,6 @@ const Dashboard = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("dd없데이트", dd);
-
     newData({
       variables: {
         roll: "1",
@@ -140,7 +136,7 @@ const Dashboard = (props) => {
       formatter: (rowContent, row) => {
         let timestamp = parseInt(row.createdAt);
         let date = new Date(timestamp);
-        console.log("date", date);
+
         let date1 = moment(date).format("YY.MM.DD HH:mm:ss");
         return (
           <div>
@@ -167,7 +163,7 @@ const Dashboard = (props) => {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           idstat = row.id;
           setid(row.id);
-          console.log("id값", row.id);
+
           setbusinessname(row.businessname);
           if (row.active == 1) {
             setstatus("활성화");
@@ -190,8 +186,6 @@ const Dashboard = (props) => {
   const handleChangeActive = async (e) => {
     e.preventDefault();
     if (status == "활성화") {
-      console.log("id", id);
-      console.log("active", active);
       changeusers({
         variables: {
           id,
@@ -201,8 +195,6 @@ const Dashboard = (props) => {
 
       return window.location.reload();
     } else {
-      console.log("id2", id);
-      console.log("active2", active);
       changeusers({
         variables: {
           id,
@@ -210,7 +202,6 @@ const Dashboard = (props) => {
         },
       });
 
-      console.log("결과2", id + active);
       return window.location.reload();
     }
   };
@@ -251,7 +242,6 @@ const Dashboard = (props) => {
       },
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
-          console.log("e값", row);
           window.open(row.url, "_blank");
         },
       },
@@ -265,7 +255,7 @@ const Dashboard = (props) => {
       },
     },
     {
-      text: "업체상호",
+      text: "업체상호 ",
       dataField: "name",
       sort: true,
       headerStyle: {
@@ -345,13 +335,11 @@ const Dashboard = (props) => {
   const [newData] = useMutation(VIEW_PAGINATION, {
     onCompleted: (data) => {
       var jArray = [];
-      console.log("data입니다", data);
-      //console.log("data.length1", data.usersbyRollPagination.length);
+
       for (var i = 0; i < data.usersbyRollPagination.length; i++) {
         jArray = jArray.concat(data.usersbyRollPagination[i]);
-        //console.log("jArray", jArray);
+
         if (data.usersbyRollPagination.length - 1 == i) {
-          console.log("data1finish", jArray);
           return setuploadData(jArray);
         }
       }
@@ -363,12 +351,11 @@ const Dashboard = (props) => {
   const [newData2] = useMutation(VIEW_PAGINATION, {
     onCompleted: (data) => {
       var jArray = [];
-      //console.log("data.length1", data.usersbyRollPagination.length);
+
       for (var i = 0; i < data.usersbyRollPagination.length; i++) {
         jArray = jArray.concat(data.usersbyRollPagination[i]);
-        //console.log("jArray", jArray);
+
         if (data.usersbyRollPagination.length - 1 == i) {
-          console.log("data1finish", jArray);
           return setuploadData2(jArray);
         }
       }
@@ -387,18 +374,7 @@ const Dashboard = (props) => {
 
   const { loading } = useQuery(VIEW_ORDER_BYROLL, {
     variables: { roll: "1" },
-    onCompleted: (data) => {
-      console.log("data.length2", data.usersbyRoll);
-      // var jArray = [];
-      // for (var i = 0; i < data.usersbyRoll.length; i++) {
-      //   jArray = jArray.concat(data.usersbyRoll[i].rawexcels);
-      //   console.log("jArray", jArray);
-      //   if (data.usersbyRoll.length - 1 == i) {
-      //     console.log("data1finish", jArray);
-      //     return setuploadData(jArray);
-      //   }
-      // }
-    },
+    onCompleted: (data) => {},
     onError: (error) => console.log(error.message),
     key: "graphql12",
   });
@@ -409,9 +385,8 @@ const Dashboard = (props) => {
       var jArray = [];
       for (var i = 0; i < data.usersbyRoll.length; i++) {
         jArray = jArray.concat(data.usersbyRoll[i].rawexcels);
-        console.log("jArray", jArray);
+
         if (data.usersbyRoll.length - 1 == i) {
-          console.log("data1finish", jArray);
           return setuploadData1(jArray);
         }
       }
@@ -502,7 +477,6 @@ const Dashboard = (props) => {
                           hideSizePerPage: true,
 
                           onPageChange: (page, sizePerPage) => {
-                            console.log("Newest page:" + page);
                             if (page > 5) {
                               newData({
                                 variables: {
@@ -554,7 +528,6 @@ const Dashboard = (props) => {
                           hideSizePerPage: true,
 
                           onPageChange: (page, sizePerPage) => {
-                            console.log("Newest page:" + page);
                             if (page > 5) {
                               newData2({
                                 variables: {
