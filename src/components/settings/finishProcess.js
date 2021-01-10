@@ -465,7 +465,7 @@ function FinishProcess(props) {
               } else {
                 nums = nums + 1;
                 console.log("nums", nums);
-                backdatanumber(nums);
+
                 setforStateCount2(forStateCount2 + 1);
                 createBankdata({
                   variables: {
