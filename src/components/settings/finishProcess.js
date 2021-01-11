@@ -157,10 +157,33 @@ function FinishProcess(props) {
 
   useEffect(() => {
     if (filtered.length !== 0) {
-      aJson.a = items[filtercount];
-      aJson.b = filtered2[filtercount];
-      aJsonArray = aJson;
-      setfiltered3(filtered3.concat(aJsonArray));
+      if (items[filtercount].합계 < 200000) {
+        console.log("aJsonArray1", items[filtercount].합계);
+        aJson.a = items[filtercount];
+        aJson.b = filtered2[filtercount];
+        aJsonArray = aJson;
+        setfiltered3(filtered3.concat(aJsonArray));
+      }
+
+      if (items[filtercount].합계 >= 200000) {
+        var aa = 0;
+        var aa1 = 0;
+        aa = (items[filtercount].합계 - 200000) / 100000;
+        aa1 = Math.floor((items[filtercount].합계 - 200000) / 100000);
+        if (aa1 == 0) {
+          items[filtercount].합계 = items[filtercount].합계 + 1000;
+          aJson.a = items[filtercount];
+          aJson.b = filtered2[filtercount];
+          aJsonArray = aJson;
+          setfiltered3(filtered3.concat(aJsonArray));
+        } else {
+          items[filtercount].합계 = items[filtercount].합계 + 1000 * (aa1 + 1);
+          aJson.a = items[filtercount];
+          aJson.b = filtered2[filtercount];
+          aJsonArray = aJson;
+          setfiltered3(filtered3.concat(aJsonArray));
+        }
+      }
     }
   }, [filtered2]);
 
@@ -923,6 +946,17 @@ function FinishProcess(props) {
               );
             }}
           </ToolkitProvider>
+          <Button
+            variant="primary"
+            style={{
+              fontWeight: "secondary",
+              marginTop: "20px",
+              marginBottom: "30px",
+            }}
+          >
+            물류비 계산 공식 : 200,000원 = 1천원 / 이후 매 100,000원 상승 시마다
+            1천원씩 추가
+          </Button>
         </div>
       </div>
     </Fragment>
