@@ -34,6 +34,10 @@ var wholetotalProducts1 = 0;
 var arrCheckVal = new Array();
 var sameNumberCheck = 0;
 
+var now1 = Date.now();
+let date1 = new Date(now1);
+let orderDate = moment(date1).format("YYYY-MM-DD");
+
 function UploadOrder(props) {
   const captureRef = React.createRef();
   const displayRef = React.createRef();
@@ -117,6 +121,7 @@ function UploadOrder(props) {
             if (excelDataRaw2[0].samename !== undefined) {
               var aJsonArrayNew = new Array();
               var totalValue = 0;
+
               for (
                 var j = 0;
                 j < excelDataRaw2[0].단가.toString().split("/").length;
@@ -150,10 +155,17 @@ function UploadOrder(props) {
                   excelDataRaw2[0].단가.toString().split("/").length - 1 ==
                   j
                 ) {
-                  setwholetotal(wholetotalhh);
+                  setwholetotal(
+                    wholetotalhh
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  );
                   setwholetotalProducts(wholetotalProducts1);
 
                   aJson.totalValue = totalValue;
+                  aJson.totalValueComa = totalValue
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   aJson.비고1 = excelDataRaw2[0].비고1.toString();
                   aJson.비고2 = excelDataRaw2[0].비고2.toString();
                   aJson.업체상호 = excelDataRaw2[0].업체상호.toString();
@@ -188,7 +200,12 @@ function UploadOrder(props) {
                 }
               }
             } else {
-              setwholetotal(wholetotal + Number(excelDataRaw2[0].합계));
+              setwholetotal(
+                wholetotal +
+                  Number(excelDataRaw2[0].합계)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              );
               setwholetotalProducts(
                 wholetotalProducts + Number(excelDataRaw2[0].수량)
               );
@@ -213,6 +230,11 @@ function UploadOrder(props) {
               aJson.수량 = excelDataRaw2[0].수량.toString();
               aJson.합계 = excelDataRaw2[0].합계.toString();
               aJson.totalValue = excelDataRaw2[0].합계.toString();
+
+              aJson.totalValueComa = excelDataRaw2[0].합계
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
               aJson.a = data.location;
               aJson.사입팀명 = excelDataRaw2[0].사입팀명.toString();
               aJson.발주자명 = excelDataRaw2[0].발주자명.toString();
@@ -266,6 +288,13 @@ function UploadOrder(props) {
           aJsonNew.사이즈 = `${arrarr3[j]}`;
           aJsonNew.수량 = `${arrarr4[j]}`;
           aJsonNew.합계 = `${arrarr5[j]}`;
+          aJsonNew.단가coma = `${arrarr[j]
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+          console.log("단가coma", aJsonNew.단가coma);
+          aJsonNew.합계coma = `${arrarr5[j]
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
           aJsonArrayNew.push(aJsonNew);
 
@@ -283,7 +312,20 @@ function UploadOrder(props) {
             aJson.단가 = excelDataRaw2[0].단가.toString();
             aJson.수량 = excelDataRaw2[0].수량.toString();
             aJson.합계 = excelDataRaw2[0].합계.toString();
+
             aJson.totalValue = totalValue;
+
+            aJson.totalValueComa = totalValue
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            aJson.단가coma = excelDataRaw2[0].단가
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            aJson.수량 = excelDataRaw2[0].수량.toString();
+            aJson.합계coma = excelDataRaw2[0].합계
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             aJson.사입팀명 = excelDataRaw2[0].사입팀명.toString();
 
@@ -318,6 +360,9 @@ function UploadOrder(props) {
         aJson.수량 = excelDataRaw2[0].수량.toString();
         aJson.합계 = excelDataRaw2[0].합계.toString();
         aJson.totalValue = excelDataRaw2[0].합계.toString();
+        aJson.totalValueComa = excelDataRaw2[0].합계
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         aJson.a = "link";
         aJson.사입팀명 = excelDataRaw2[0].사입팀명.toString();
         aJson.발주자명 = excelDataRaw2[0].발주자명.toString();
@@ -326,6 +371,13 @@ function UploadOrder(props) {
         aJson.예금주명 = excelDataRaw2[0].예금주명.toString();
         aJson.비고1 = excelDataRaw2[0].비고1.toString();
         aJson.비고2 = excelDataRaw2[0].비고2.toString();
+
+        aJson.단가coma = excelDataRaw2[0].단가
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        aJson.합계coma = excelDataRaw2[0].합계
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
         aJsonArray = aJson;
         setresultData(resultData.concat(aJsonArray));
@@ -373,6 +425,10 @@ function UploadOrder(props) {
   const closeAndReload1 = () => {
     setnoticeShow(true);
     testdd();
+  };
+
+  const createComa = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   const finalOrder = async () => {
@@ -794,14 +850,13 @@ function UploadOrder(props) {
                           style={{
                             textAlign: "center",
                             marginTop: "50px",
-                            marginBottom: "20px",
-                            fontSize: "32px",
+                            marginBottom: "40px",
+                            fontSize: "56px",
                             fontWeight: "800",
                           }}
                         >
                           발주서
                         </div>
-                        <div className="col-sm-3"> </div>
                         <div className="col-sm-6">
                           <Form.Group>
                             <InputGroup>
@@ -809,9 +864,36 @@ function UploadOrder(props) {
                                 <Button
                                   variant="danger"
                                   style={{
-                                    width: "200px",
+                                    width: "300px",
                                     backgroundColor: "#ff8084 !important",
-                                    fontSize: "30px",
+                                    fontSize: "34px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  동대문 도매업체
+                                </Button>
+                              </InputGroup.Prepend>
+                              <Form.Control
+                                placeholder="예) E"
+                                value={resultData[filtercount].업체상호}
+                                style={{
+                                  fontSize: "34px",
+                                  fontWeight: "bold",
+                                }}
+                              />
+                            </InputGroup>
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-6">
+                          <Form.Group>
+                            <InputGroup>
+                              <InputGroup.Prepend>
+                                <Button
+                                  variant="danger"
+                                  style={{
+                                    width: "300px",
+                                    backgroundColor: "#ff8084 !important",
+                                    fontSize: "34px",
                                     fontWeight: "bold",
                                   }}
                                 >
@@ -822,15 +904,13 @@ function UploadOrder(props) {
                                 placeholder="예) E"
                                 value={resultData[filtercount].발주자명}
                                 style={{
-                                  fontSize: "28px",
+                                  fontSize: "34px",
                                   fontWeight: "bold",
                                 }}
                               />
                             </InputGroup>
                           </Form.Group>
                         </div>
-                        <div className="col-sm-3"> </div>
-                        <div className="col-sm-3"> </div>
                         <div className="col-sm-6">
                           {" "}
                           <Form.Group>
@@ -839,9 +919,37 @@ function UploadOrder(props) {
                                 <Button
                                   variant="danger"
                                   style={{
-                                    width: "200px",
+                                    width: "300px",
                                     backgroundColor: "#ff8084 !important",
-                                    fontSize: "30px",
+                                    fontSize: "34px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  발주날짜
+                                </Button>
+                              </InputGroup.Prepend>
+                              <Form.Control
+                                placeholder="예) E"
+                                style={{
+                                  fontSize: "34px",
+                                  fontWeight: "bold",
+                                }}
+                                value={orderDate}
+                              />
+                            </InputGroup>
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-6">
+                          {" "}
+                          <Form.Group>
+                            <InputGroup>
+                              <InputGroup.Prepend>
+                                <Button
+                                  variant="danger"
+                                  style={{
+                                    width: "300px",
+                                    backgroundColor: "#ff8084 !important",
+                                    fontSize: "34px",
                                     fontWeight: "bold",
                                   }}
                                 >
@@ -851,7 +959,7 @@ function UploadOrder(props) {
                               <Form.Control
                                 placeholder="예) E"
                                 style={{
-                                  fontSize: "28px",
+                                  fontSize: "34px",
                                   fontWeight: "bold",
                                 }}
                                 value={resultData[filtercount].사입팀명}
@@ -868,7 +976,7 @@ function UploadOrder(props) {
                             textAlign: "center",
                             marginTop: "50px",
                             marginBottom: "20px",
-                            fontSize: "32px",
+                            fontSize: "56px",
                             fontWeight: "800",
                           }}
                         >
@@ -910,9 +1018,9 @@ function UploadOrder(props) {
                                     <td>{resultData[filtercount].상품코드}</td>
                                     <td>{resultData[filtercount].컬러}</td>
                                     <td>{resultData[filtercount].사이즈}</td>
-                                    <td>{resultData[filtercount].단가}</td>
+                                    <td>{resultData[filtercount].단가coma}</td>
                                     <td>{resultData[filtercount].수량}</td>
-                                    <td>{resultData[filtercount].합계}</td>
+                                    <td>{resultData[filtercount].합계coma}</td>
                                   </tr>
                                 </tbody>
                               ) : (
@@ -934,9 +1042,9 @@ function UploadOrder(props) {
                                         <td style={{}}>{d.상품코드}</td>
                                         <td>{d.컬러}</td>
                                         <td>{d.사이즈}</td>
-                                        <td>{d.단가}</td>
+                                        <td>{d.단가coma}</td>
                                         <td>{d.수량}</td>
-                                        <td>{d.합계}</td>
+                                        <td>{d.합계coma}</td>
                                       </tr>
                                     )
                                   )}
@@ -947,8 +1055,14 @@ function UploadOrder(props) {
                         </div>{" "}
                       </div>
 
-                      <div className="row">
-                        <div className="col-sm-12">
+                      <div
+                        className="row"
+                        style={{
+                          marginTop: "50px",
+                        }}
+                      >
+                        <div className="col-sm-8"></div>
+                        <div className="col-sm-4">
                           <Form.Group>
                             <InputGroup>
                               <InputGroup.Prepend>
@@ -959,6 +1073,7 @@ function UploadOrder(props) {
                                     width: "200px",
                                     fontSize: "28px",
                                     fontWeight: "bold",
+                                    textAlign: "right !important",
                                   }}
                                 >
                                   합계
@@ -972,8 +1087,9 @@ function UploadOrder(props) {
                                   style={{
                                     fontSize: "28px",
                                     fontWeight: "bold",
+                                    textAlign: "right !important",
                                   }}
-                                  value={resultData[filtercount].합계}
+                                  value={resultData[filtercount].합계coma}
                                 />
                               ) : (
                                 <Form.Control
@@ -982,7 +1098,7 @@ function UploadOrder(props) {
                                     fontSize: "28px",
                                     fontWeight: "bold",
                                   }}
-                                  value={resultData[filtercount].totalValue}
+                                  value={resultData[filtercount].totalValueComa}
                                 />
                               )}
                             </InputGroup>

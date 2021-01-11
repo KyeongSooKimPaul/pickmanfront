@@ -158,7 +158,6 @@ function FinishProcess(props) {
   useEffect(() => {
     if (filtered.length !== 0) {
       if (items[filtercount].합계 < 200000) {
-        console.log("aJsonArray1", items[filtercount].합계);
         aJson.a = items[filtercount];
         aJson.b = filtered2[filtercount];
         aJsonArray = aJson;
