@@ -159,6 +159,7 @@ function FinishProcess(props) {
     if (filtered.length !== 0) {
       if (items[filtercount].합계 < 200000) {
         aJson.a = items[filtercount];
+        aJson.a.물류비 = 0;
         aJson.b = filtered2[filtercount];
         aJsonArray = aJson;
         setfiltered3(filtered3.concat(aJsonArray));
@@ -170,15 +171,19 @@ function FinishProcess(props) {
         aa = (items[filtercount].합계 - 200000) / 100000;
         aa1 = Math.floor((items[filtercount].합계 - 200000) / 100000);
         if (aa1 == 0) {
-          items[filtercount].합계 = items[filtercount].합계 + 1000;
+          //items[filtercount].합계 = items[filtercount].합계 + 1000;
+
           aJson.a = items[filtercount];
           aJson.b = filtered2[filtercount];
+          aJson.a.물류비 = 1000;
           aJsonArray = aJson;
           setfiltered3(filtered3.concat(aJsonArray));
         } else {
-          items[filtercount].합계 = items[filtercount].합계 + 1000 * (aa1 + 1);
+          //items[filtercount].합계 = items[filtercount].합계 + 1000 * (aa1 + 1);
+
           aJson.a = items[filtercount];
           aJson.b = filtered2[filtercount];
+          aJson.a.물류비 = 1000 * (aa1 + 1);
           aJsonArray = aJson;
           setfiltered3(filtered3.concat(aJsonArray));
         }
@@ -362,6 +367,14 @@ function FinishProcess(props) {
     {
       text: "업체상호 ",
       dataField: "a.업체상호",
+      sort: true,
+      headerStyle: {
+        backgroundColor: "#f6f6ee",
+      },
+    },
+    {
+      text: "물류비 ",
+      dataField: "a.물류비",
       sort: true,
       headerStyle: {
         backgroundColor: "#f6f6ee",
@@ -913,7 +926,10 @@ function FinishProcess(props) {
             search
             exportCSV={{
               fileName: "대량이체파일.csv",
-              blobType: "text/csv;charset=utf8",
+              noAutoBOM: false,
+              //noAutoBOM: false,
+              // blobType: "text/csv;charset=utf-8-sig",
+              blobType: "data:text/csv;charset=utf-8,%EF%BB%BF",
             }}
           >
             {(tt) => {

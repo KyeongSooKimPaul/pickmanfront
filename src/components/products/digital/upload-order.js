@@ -1061,8 +1061,8 @@ function UploadOrder(props) {
                           marginTop: "50px",
                         }}
                       >
-                        <div className="col-sm-8"></div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-7"></div>
+                        <div className="col-sm-5">
                           <Form.Group>
                             <InputGroup>
                               <InputGroup.Prepend>
