@@ -159,9 +159,7 @@ function UploadOrder(props) {
                   excelDataRaw2[0].단가.toString().split("--dd--").length - 1 ==
                   j
                 ) {
-                  setwholetotal(
-                    wholetotalhh
-                  );
+                  setwholetotal(wholetotalhh);
                   setwholetotalProducts(wholetotalProducts1);
 
                   aJson.totalValue = totalValue;
@@ -202,11 +200,8 @@ function UploadOrder(props) {
                 }
               }
             } else {
-              setwholetotal(
-                wholetotal +
-                  Number(excelDataRaw2[0].합계)
-                 );
-              
+              setwholetotal(wholetotal + Number(excelDataRaw2[0].합계));
+
               setwholetotalProducts(
                 wholetotalProducts + Number(excelDataRaw2[0].수량)
               );
