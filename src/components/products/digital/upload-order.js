@@ -124,15 +124,19 @@ function UploadOrder(props) {
 
               for (
                 var j = 0;
-                j < excelDataRaw2[0].단가.toString().split("/").length;
+                j < excelDataRaw2[0].단가.toString().split("--dd--").length;
                 j++
               ) {
-                var arrarr = excelDataRaw2[0].단가.toString().split("/");
-                var arrarr1 = excelDataRaw2[0].상품코드.toString().split("/");
-                var arrarr2 = excelDataRaw2[0].컬러.toString().split("/");
-                var arrarr3 = excelDataRaw2[0].사이즈.toString().split("/");
-                var arrarr4 = excelDataRaw2[0].수량.toString().split("/");
-                var arrarr5 = excelDataRaw2[0].합계.toString().split("/");
+                var arrarr = excelDataRaw2[0].단가.toString().split("--dd--");
+                var arrarr1 = excelDataRaw2[0].상품코드
+                  .toString()
+                  .split("--dd--");
+                var arrarr2 = excelDataRaw2[0].컬러.toString().split("--dd--");
+                var arrarr3 = excelDataRaw2[0].사이즈
+                  .toString()
+                  .split("--dd--");
+                var arrarr4 = excelDataRaw2[0].수량.toString().split("--dd--");
+                var arrarr5 = excelDataRaw2[0].합계.toString().split("--dd--");
 
                 aJson1.상품코드 = arrarr1;
                 wholetotalhh = wholetotalhh + Number(arrarr5[j]);
@@ -152,7 +156,7 @@ function UploadOrder(props) {
                 aJsonArrayNew.push(aJsonNew);
 
                 if (
-                  excelDataRaw2[0].단가.toString().split("/").length - 1 ==
+                  excelDataRaw2[0].단가.toString().split("--dd--").length - 1 ==
                   j
                 ) {
                   setwholetotal(
@@ -267,15 +271,15 @@ function UploadOrder(props) {
         var totalValue = 0;
         for (
           var j = 0;
-          j < excelDataRaw2[0].단가.toString().split("/").length;
+          j < excelDataRaw2[0].단가.toString().split("--dd--").length;
           j++
         ) {
-          var arrarr = excelDataRaw2[0].단가.toString().split("/");
-          var arrarr1 = excelDataRaw2[0].상품코드.toString().split("/");
-          var arrarr2 = excelDataRaw2[0].컬러.toString().split("/");
-          var arrarr3 = excelDataRaw2[0].사이즈.toString().split("/");
-          var arrarr4 = excelDataRaw2[0].수량.toString().split("/");
-          var arrarr5 = excelDataRaw2[0].합계.toString().split("/");
+          var arrarr = excelDataRaw2[0].단가.toString().split("--dd--");
+          var arrarr1 = excelDataRaw2[0].상품코드.toString().split("--dd--");
+          var arrarr2 = excelDataRaw2[0].컬러.toString().split("--dd--");
+          var arrarr3 = excelDataRaw2[0].사이즈.toString().split("--dd--");
+          var arrarr4 = excelDataRaw2[0].수량.toString().split("--dd--");
+          var arrarr5 = excelDataRaw2[0].합계.toString().split("--dd--");
 
           totalValue = totalValue + Number(arrarr5[j]);
 
@@ -298,7 +302,10 @@ function UploadOrder(props) {
 
           aJsonArrayNew.push(aJsonNew);
 
-          if (excelDataRaw2[0].단가.toString().split("/").length - 1 == j) {
+          if (
+            excelDataRaw2[0].단가.toString().split("--dd--").length - 1 ==
+            j
+          ) {
             aJson.업체상호 = excelDataRaw2[0].업체상호.toString();
             aJson.가게주소 = excelDataRaw2[0].가게주소.toString();
             aJson.전화번호 = excelDataRaw2[0].전화번호.toString();
@@ -575,22 +582,22 @@ function UploadOrder(props) {
               d[j].samename = arrayTest;
 
               if (d[i].상품코드 !== "") {
-                d[i].상품코드 = d[i].상품코드 + "/" + d[j].상품코드;
+                d[i].상품코드 = d[i].상품코드 + "--dd--" + d[j].상품코드;
                 d[j].상품코드 = "";
 
-                d[i].컬러 = d[i].컬러 + "/" + d[j].컬러;
+                d[i].컬러 = d[i].컬러 + "--dd--" + d[j].컬러;
                 d[j].컬러 = "";
 
-                d[i].사이즈 = d[i].사이즈 + "/" + d[j].사이즈;
+                d[i].사이즈 = d[i].사이즈 + "--dd--" + d[j].사이즈;
                 d[j].사이즈 = "";
 
-                d[i].단가 = d[i].단가 + "/" + d[j].단가;
+                d[i].단가 = d[i].단가 + "--dd--" + d[j].단가;
                 d[j].단가 = "";
 
-                d[i].수량 = d[i].수량 + "/" + d[j].수량;
+                d[i].수량 = d[i].수량 + "--dd--" + d[j].수량;
                 d[j].수량 = "";
 
-                d[i].합계 = d[i].합계 + "/" + d[j].합계;
+                d[i].합계 = d[i].합계 + "--dd--" + d[j].합계;
                 d[j].합계 = "";
               }
 
@@ -837,6 +844,7 @@ function UploadOrder(props) {
               style={{
                 marginLeft: "100px",
                 marginRight: "100px",
+                overflowWrap: "break-word",
               }}
             >
               <Fragment>
@@ -1174,7 +1182,12 @@ function UploadOrder(props) {
                           </Form.Group>
                         </div>
                       </div>
-                      <div className="row">
+                      <div
+                        className="row"
+                        style={{
+                          flexDirection: "row",
+                        }}
+                      >
                         <div className="col-sm-12">
                           {" "}
                           <Form.Group>
@@ -1207,7 +1220,7 @@ function UploadOrder(props) {
                           {" "}
                           <Form.Group>
                             <InputGroup>
-                              <InputGroup.Prepend>
+                              <InputGroup.Prepend style={{}}>
                                 <Button
                                   variant="danger"
                                   style={{
@@ -1220,14 +1233,19 @@ function UploadOrder(props) {
                                   비고2
                                 </Button>
                               </InputGroup.Prepend>
-                              <Form.Control
-                                placeholder="예) E"
-                                value={resultData[filtercount].비고2}
+
+                              <span
                                 style={{
                                   fontSize: "28px",
                                   fontWeight: "bold",
+                                  marginLeft: "30px",
+                                  verticalAlign: "middle",
+                                  marginTop: "10px",
                                 }}
-                              />
+                              >
+                                {" "}
+                                {resultData[filtercount].비고2}
+                              </span>
                             </InputGroup>
                           </Form.Group>
                         </div>{" "}
