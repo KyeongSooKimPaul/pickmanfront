@@ -124,7 +124,7 @@ function UploadOrder(props) {
 
               for (
                 var j = 0;
-                j < excelDataRaw2[0].단가.toString().split("--dd--").length;
+                j < excelDataRaw2[0].상품코드.toString().split("--dd--").length;
                 j++
               ) {
                 var arrarr = excelDataRaw2[0].단가.toString().split("--dd--");
@@ -156,11 +156,14 @@ function UploadOrder(props) {
                 aJsonArrayNew.push(aJsonNew);
 
                 if (
-                  excelDataRaw2[0].단가.toString().split("--dd--").length - 1 ==
+                  excelDataRaw2[0].상품코드.toString().split("--dd--").length -
+                    1 ==
                   j
                 ) {
                   setwholetotal(wholetotalhh);
                   setwholetotalProducts(wholetotalProducts1);
+                  console.log("wholetotalhh", wholetotalhh);
+                  console.log("wholetotalProducts1", wholetotalProducts1);
 
                   aJson.totalValue = totalValue;
                   aJson.totalValueComa = totalValue
@@ -205,7 +208,8 @@ function UploadOrder(props) {
               setwholetotalProducts(
                 wholetotalProducts + Number(excelDataRaw2[0].수량)
               );
-
+              console.log("wholetotalhh", wholetotalhh);
+              console.log("wholetotalProducts1", wholetotalProducts1);
               wholetotalhh = wholetotalhh + Number(excelDataRaw2[0].합계);
               wholetotalProducts1 =
                 wholetotalProducts1 + Number(excelDataRaw2[0].수량);
@@ -263,7 +267,7 @@ function UploadOrder(props) {
         var totalValue = 0;
         for (
           var j = 0;
-          j < excelDataRaw2[0].단가.toString().split("--dd--").length;
+          j < excelDataRaw2[0].상품코드.toString().split("--dd--").length;
           j++
         ) {
           var arrarr = excelDataRaw2[0].단가.toString().split("--dd--");
@@ -295,7 +299,7 @@ function UploadOrder(props) {
           aJsonArrayNew.push(aJsonNew);
 
           if (
-            excelDataRaw2[0].단가.toString().split("--dd--").length - 1 ==
+            excelDataRaw2[0].상품코드.toString().split("--dd--").length - 1 ==
             j
           ) {
             aJson.업체상호 = excelDataRaw2[0].업체상호.toString();
@@ -1268,7 +1272,7 @@ function UploadOrder(props) {
                     }}
                   </ToolkitProvider>
                 )}{" "}
-                {ButtonView && wholetotal && wholetotalProducts && (
+                {ButtonView && (
                   <div>
                     <span className="text-info">
                       총 발주금액 : {wholetotal}원
