@@ -1233,6 +1233,7 @@ function UploadOrder(props) {
                                   marginLeft: "30px",
                                   verticalAlign: "middle",
                                   marginTop: "10px",
+                                  textAlign: "left",
                                 }}
                               >
                                 {" "}
