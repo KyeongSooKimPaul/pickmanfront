@@ -161,8 +161,6 @@ function UploadOrder(props) {
                 ) {
                   setwholetotal(
                     wholetotalhh
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   );
                   setwholetotalProducts(wholetotalProducts1);
 
@@ -207,9 +205,8 @@ function UploadOrder(props) {
               setwholetotal(
                 wholetotal +
                   Number(excelDataRaw2[0].합계)
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              );
+                 );
+              
               setwholetotalProducts(
                 wholetotalProducts + Number(excelDataRaw2[0].수량)
               );
