@@ -90,6 +90,7 @@ const Download = (props) => {
       dataField: "__EMPTY_13",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
     {
@@ -97,6 +98,7 @@ const Download = (props) => {
       dataField: "__EMPTY_14",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
     {
@@ -104,6 +106,7 @@ const Download = (props) => {
       dataField: "__EMPTY",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
     {
@@ -111,6 +114,7 @@ const Download = (props) => {
       dataField: "__EMPTY_3",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -119,6 +123,7 @@ const Download = (props) => {
       dataField: "__EMPTY_4",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -127,6 +132,7 @@ const Download = (props) => {
       dataField: "__EMPTY_5",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -135,6 +141,7 @@ const Download = (props) => {
       dataField: "__EMPTY_6",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -143,6 +150,7 @@ const Download = (props) => {
       dataField: "__EMPTY_7",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -151,6 +159,7 @@ const Download = (props) => {
       dataField: "__EMPTY_8",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -159,6 +168,7 @@ const Download = (props) => {
       dataField: "__EMPTY_1",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -167,6 +177,7 @@ const Download = (props) => {
       dataField: "__EMPTY_2",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -175,6 +186,7 @@ const Download = (props) => {
       dataField: "__EMPTY_9",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -183,6 +195,7 @@ const Download = (props) => {
       dataField: "__EMPTY_9",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
 
@@ -191,6 +204,7 @@ const Download = (props) => {
       dataField: "__EMPTY_10",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
     {
@@ -198,6 +212,7 @@ const Download = (props) => {
       dataField: "__EMPTY_11",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
     ,
@@ -206,6 +221,7 @@ const Download = (props) => {
       dataField: "__EMPTY_15",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
     {
@@ -213,6 +229,15 @@ const Download = (props) => {
       dataField: "__EMPTY_16",
       headerStyle: {
         backgroundColor: "#f6f6ee",
+        fontSize: "14px",
+      },
+    },
+    {
+      text: "채팅링크",
+      dataField: "__EMPTY_17",
+      headerStyle: {
+        backgroundColor: "#f6f6ee",
+        fontSize: "14px",
       },
     },
   ];

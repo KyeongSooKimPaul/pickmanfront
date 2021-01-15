@@ -85,6 +85,7 @@ function UploadOrder(props) {
           jarrayfINAL = jarrayfINAL.concat(startfiltering[i]);
         }
         if (startfiltering.length - 1 == i) {
+          console.log("jarrayfINAL", jarrayfINAL);
           setexcelDataRaw(jarrayfINAL);
         }
       }
@@ -184,7 +185,7 @@ function UploadOrder(props) {
                   aJson.단가 = excelDataRaw2[0].단가.toString();
                   aJson.수량 = excelDataRaw2[0].수량.toString();
                   aJson.합계 = excelDataRaw2[0].합계.toString();
-
+                  aJson.채팅링크 = excelDataRaw2[0].채팅링크.toString();
                   aJson.사입팀명 = excelDataRaw2[0].사입팀명.toString();
 
                   aJson.합계 = excelDataRaw2[0].합계.toString();
@@ -238,6 +239,7 @@ function UploadOrder(props) {
               aJson.a = data.location;
               aJson.사입팀명 = excelDataRaw2[0].사입팀명.toString();
               aJson.발주자명 = excelDataRaw2[0].발주자명.toString();
+              aJson.채팅링크 = excelDataRaw2[0].채팅링크.toString();
               aJson.합계 = excelDataRaw2[0].합계.toString();
               aJson.결제방식 = excelDataRaw2[0].결제방식.toString();
               aJson.예금주명 = excelDataRaw2[0].예금주명.toString();
@@ -458,8 +460,10 @@ function UploadOrder(props) {
           "\n\n" +
           `${resultData2[i].비고1}` +
           "\n\n발주서보기 > " +
-          `${resultData2[i].a}`;
-        aJson.tmplId = "pickman002";
+          `${resultData2[i].a}` +
+          "\n\n문의하기 > " +
+          `${resultData2[i].채팅링크}`;
+        aJson.tmplId = "pickman004";
         aJsonArray.push(aJson);
       }
 
@@ -569,6 +573,7 @@ function UploadOrder(props) {
         );
         window.location.reload();
       } else {
+        console.log("d", d)
         for (var i = 0; i < d.length - 1; i++) {
           var arrayTest = d[i].업체상호;
 
