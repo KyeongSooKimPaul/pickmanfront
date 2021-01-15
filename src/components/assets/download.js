@@ -102,7 +102,7 @@ const Download = (props) => {
       },
     },
     {
-      text: "업체상호 ",
+      text: "업체상호",
       dataField: "__EMPTY",
       headerStyle: {
         backgroundColor: "#f6f6ee",
