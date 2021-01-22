@@ -888,6 +888,7 @@ function UploadOrder(props) {
                                 style={{
                                   fontSize: "28px",
                                   fontWeight: "bold",
+                                  padding : : "50px"
                                 }}
                               />
                             </InputGroup>
@@ -915,6 +916,7 @@ function UploadOrder(props) {
                                 style={{
                                   fontSize: "28px",
                                   fontWeight: "bold",
+                                  padding : : "50px"
                                 }}
                               />
                             </InputGroup>
@@ -942,6 +944,7 @@ function UploadOrder(props) {
                                 style={{
                                   fontSize: "28px",
                                   fontWeight: "bold",
+                                  padding : : "50px"
                                 }}
                                 value={orderDate}
                               />
@@ -970,6 +973,7 @@ function UploadOrder(props) {
                                 style={{
                                   fontSize: "28px",
                                   fontWeight: "bold",
+                                  padding : : "50px"
                                 }}
                                 value={resultData[filtercount].사입팀명}
                               />
