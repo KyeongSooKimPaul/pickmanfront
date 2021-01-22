@@ -886,9 +886,8 @@ function UploadOrder(props) {
                                 placeholder="예) E"
                                 value={resultData[filtercount].업체상호}
                                 style={{
-                                  fontSize: "28px",
+                                  fontSize: "34px",
                                   fontWeight: "bold",
-                                  padding : : "50px"
                                 }}
                               />
                             </InputGroup>
@@ -914,9 +913,8 @@ function UploadOrder(props) {
                                 placeholder="예) E"
                                 value={resultData[filtercount].발주자명}
                                 style={{
-                                  fontSize: "28px",
+                                  fontSize: "34px",
                                   fontWeight: "bold",
-                                  padding : : "50px"
                                 }}
                               />
                             </InputGroup>
@@ -942,9 +940,8 @@ function UploadOrder(props) {
                               <Form.Control
                                 placeholder="예) E"
                                 style={{
-                                  fontSize: "28px",
+                                  fontSize: "34px",
                                   fontWeight: "bold",
-                                  padding : : "50px"
                                 }}
                                 value={orderDate}
                               />
@@ -971,9 +968,8 @@ function UploadOrder(props) {
                               <Form.Control
                                 placeholder="예) E"
                                 style={{
-                                  fontSize: "28px",
+                                  fontSize: "34px",
                                   fontWeight: "bold",
-                                  padding : : "50px"
                                 }}
                                 value={resultData[filtercount].사입팀명}
                               />
