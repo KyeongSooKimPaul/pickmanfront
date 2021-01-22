@@ -573,7 +573,7 @@ function UploadOrder(props) {
         );
         window.location.reload();
       } else {
-        console.log("d", d)
+        console.log("d", d);
         for (var i = 0; i < d.length - 1; i++) {
           var arrayTest = d[i].업체상호;
 
@@ -886,7 +886,7 @@ function UploadOrder(props) {
                                 placeholder="예) E"
                                 value={resultData[filtercount].업체상호}
                                 style={{
-                                  fontSize: "34px",
+                                  fontSize: "28px",
                                   fontWeight: "bold",
                                 }}
                               />
@@ -913,7 +913,7 @@ function UploadOrder(props) {
                                 placeholder="예) E"
                                 value={resultData[filtercount].발주자명}
                                 style={{
-                                  fontSize: "34px",
+                                  fontSize: "28px",
                                   fontWeight: "bold",
                                 }}
                               />
@@ -940,7 +940,7 @@ function UploadOrder(props) {
                               <Form.Control
                                 placeholder="예) E"
                                 style={{
-                                  fontSize: "34px",
+                                  fontSize: "28px",
                                   fontWeight: "bold",
                                 }}
                                 value={orderDate}
@@ -968,7 +968,7 @@ function UploadOrder(props) {
                               <Form.Control
                                 placeholder="예) E"
                                 style={{
-                                  fontSize: "34px",
+                                  fontSize: "28px",
                                   fontWeight: "bold",
                                 }}
                                 value={resultData[filtercount].사입팀명}
