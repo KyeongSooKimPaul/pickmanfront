@@ -120,7 +120,10 @@ function LoginTabset(props) {
   const onClickimg = () => {};
 
   const [loginCompleted] = useMutation(SIGNIN, {
-    onError: (error) => alert("입력정보를 다시 확인해주세요"),
+    onError: (error) => {
+      window.alert("입력정보를 다시 확인해주세요");
+      window.location.reload();
+    },
     onCompleted: (response) => {
       alert("로그인이 완료되었습니다.");
 
