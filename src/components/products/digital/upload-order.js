@@ -495,10 +495,10 @@ function UploadOrder(props) {
   };
 
   const config = {
-    bucketName: "jwparkbucket",
+    bucketName: "jwparkbucket1",
     region: "ap-northeast-2",
-    accessKeyId: "AKIAICMXEOVCKDCYF66A",
-    secretAccessKey: "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",
+    accessKeyId: "AKIASIP74G2YRG7JD47N",
+    secretAccessKey: "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",
   };
   const ReactS3Client = new S3(config);
 
