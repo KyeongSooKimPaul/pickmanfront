@@ -122,6 +122,7 @@ function LoginTabset(props) {
   const [loginCompleted] = useMutation(SIGNIN, {
     onError: (error) => {
       window.alert("입력정보를 다시 확인해주세요");
+      window.localStorage.clear();
       window.location.reload();
     },
     onCompleted: (response) => {
